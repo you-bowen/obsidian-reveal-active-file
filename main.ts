@@ -1,4 +1,4 @@
-import { Plugin, Command, Workspace } from 'obsidian';
+import { Plugin, Command, Workspace, MarkdownView, ViewState } from 'obsidian';
 declare module "obsidian" {
 	interface WorkspaceLeaf {
 		width: Number;
@@ -22,7 +22,27 @@ export default class MyPlugin extends Plugin {
 	}
 	private reveal()
 	{
+		// view.editor.focus()
+		let a:ViewState;
+		let prevLeaf = this.app.workspace.activeLeaf;
+		window.prevLeaf = prevLeaf;
+		// console.log(prevLeaf.containerEl);
 		(this.app as any).commands.executeCommandById('file-explorer:reveal-active-file');
+		// this.app.workspace.setActiveLeaf(prevLeaf, {focus:true})
+		// console.log(prevLeaf.tabHeaderEl)
+
+		// solution 1:
+		// setTimeout(()=>prevLeaf.tabHeaderEl.click(), 200)
+		
+		// solution 2:
+		const prevLeafState = prevLeaf.getViewState()
+		prevLeafState.active = true
+		setTimeout(() => {
+			prevLeaf.setViewState(prevLeafState)
+		}, 200);
+		
+		// 一个未公开的接口
+		// window.xx = this.app.workspace.getActiveFileView()
 	}
 
 	onload() {
