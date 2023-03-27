@@ -4,7 +4,8 @@
   "main": "main.js",
   "scripts": {
     "dev": "rollup --config rollup.config.js -w",
-    "build": "rollup --config rollup.config.js"
+    "build": "rollup --config rollup.config.js",
+    "packer": "mkdir -p obsidian-reveal-active-file && cp main.js manifest.json obsidian-reveal-active-file"
   },
   "keywords": [],
   "author": "",
